@@ -1,0 +1,17 @@
+{
+    "exam_list": [
+        {
+            "exam_id": "czoxOiIxIjs",
+            "name": "Term  - 1 "
+        },
+        {
+            "exam_id": "czoxOiI3Ijs",
+            "name": "Quarterly"
+        },
+        {
+            "exam_id": "czoxOiI4Ijs",
+            "name": "Halfly"
+        }
+    ],
+    "status": "SUCCESS"
+}

@@ -1,0 +1,106 @@
+{
+    "source_id": "czozOiIzNjIiOw",
+    "timetable_list": {
+        "MONDAY": {
+            "1": {
+                "subject_name": "Tamil"
+            },
+            "2": {
+                "subject_name": "English"
+            },
+            "3": {
+                "subject_name": "Hindi"
+            },
+            "4": {
+                "subject_name": "Arts (Drawing)"
+            },
+            "5": {
+                "subject_name": "Shapes&Colors"
+            },
+            "6": {
+                "subject_name": "Puzzles"
+            }
+        },
+        "TUESDAY": {
+            "1": {
+                "subject_name": "English"
+            },
+            "2": {
+                "subject_name": "Hindi"
+            },
+            "3": {
+                "subject_name": "Arts (Drawing)"
+            },
+            "4": {
+                "subject_name": "Shapes&Colors"
+            },
+            "5": {
+                "subject_name": "Puzzles"
+            },
+            "6": {
+                "subject_name": "Tamil"
+            }
+        },
+        "WEDNESDAY": {
+            "1": {
+                "subject_name": "Hindi"
+            },
+            "2": {
+                "subject_name": "Arts (Drawing)"
+            },
+            "3": {
+                "subject_name": "Shapes&Colors"
+            },
+            "4": {
+                "subject_name": "Puzzles"
+            },
+            "5": {
+                "subject_name": "Tamil"
+            },
+            "6": {
+                "subject_name": "English"
+            }
+        },
+        "THURSDAY": {
+            "1": {
+                "subject_name": "Arts (Drawing)"
+            },
+            "2": {
+                "subject_name": "Shapes&Colors"
+            },
+            "3": {
+                "subject_name": "Puzzles"
+            },
+            "4": {
+                "subject_name": "Tamil"
+            },
+            "5": {
+                "subject_name": "English"
+            },
+            "6": {
+                "subject_name": "Arts (Drawing)"
+            }
+        },
+        "FRIDAY": {
+            "1": {
+                "subject_name": "Shapes&Colors"
+            },
+            "2": {
+                "subject_name": "Puzzles"
+            },
+            "3": {
+                "subject_name": "Tamil"
+            },
+            "4": {
+                "subject_name": "English"
+            },
+            "5": {
+                "subject_name": "Hindi"
+            },
+            "6": {
+                "subject_name": "Shapes&Colors"
+            }
+        }
+    },
+    "status": "SUCCESS"
+}

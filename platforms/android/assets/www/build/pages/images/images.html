@@ -1,0 +1,14 @@
+<ion-toolbar class="android-attr">
+  <ion-title>
+	{{image.title}}
+  </ion-title>
+  <ion-buttons start>
+	<button (click)="closeModal()">
+	  <ion-icon name="close" item-left large></ion-icon>
+	</button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content class="images has-no-header">
+		<img src="{{ image.src }}" />
+</ion-content>

@@ -1,0 +1,8 @@
+{
+    "exam_schedule": [
+
+    ],
+    "status": "WARNING",
+    "error_code": "1514",
+    "message": "exam schedule is not updated yet"
+}

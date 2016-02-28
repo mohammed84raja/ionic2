@@ -1,0 +1,15 @@
+
+<ion-navbar *navbar c_theme>
+  <ion-title>
+    Subjects
+  </ion-title>
+</ion-navbar>
+
+<ion-content class="subject">
+	<ion-list>
+		<ion-item-group>
+			<ion-item *ngFor="#subject of subjects">{{subject.subject_name}}</ion-item>
+		</ion-item-group>
+	</ion-list>
+	
+</ion-content>

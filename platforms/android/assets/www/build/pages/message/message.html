@@ -1,0 +1,20 @@
+<ion-navbar *navbar c_theme>
+  <ion-title>Messages</ion-title>
+</ion-navbar>
+
+<ion-content padding class="message">
+	<ion-card *ngFor="#msg of msges">
+		<!--<ion-item>
+			<img src="img/photo1.jpg" (click)="openImageModal('img/photo1.jpg')" width="100" height="100" class="image-list-thumb"/>
+		</ion-item>-->
+		<ion-card-content>
+			<p>
+				{{msg.message}}
+			</p>
+		</ion-card-content>
+		<ion-item>
+			<ion-note item-right>{{msg.creation_date}} days ago</ion-note>
+		</ion-item>
+	</ion-card>
+	
+</ion-content>

@@ -1,0 +1,21 @@
+<ion-navbar *navbar c_theme>
+  <ion-title>Events</ion-title>
+</ion-navbar>
+
+<ion-content class="events">
+
+	<ion-card *ngFor="#item of items" >
+		<ion-item>
+			
+			<ion-label class="title">{{ item.title }}</ion-label>
+			<ion-badge item-right>{{ item.date }}</ion-badge>
+		</ion-item>
+		<ion-item>
+			<img (click)="openImageModal(item)" width="100" height="100" src="{{ item.img }}" />
+		</ion-item>
+	  <ion-card-content>
+		<ion-label> {{ item.description }}</ion-label>
+	  </ion-card-content>
+	</ion-card>
+	
+</ion-content>

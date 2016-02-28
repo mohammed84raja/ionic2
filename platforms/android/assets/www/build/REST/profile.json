@@ -1,0 +1,22 @@
+{
+    "status": "SUCCESS",
+    "personal_info": {
+        "contact_id": "czo0OiIzNTIwIjs",
+        "fname": "Raakin",
+        "lname": null,
+        "name": "Raakin",
+        "handle": "raakin-3520",
+        "handle_updated": "0",
+        "dob": "1970-01-01",
+        "district_id": "27",
+        "phone": "9994816410",
+        "mobile": "",
+        "emailid": "",
+        "gender": "F",
+        "addr": "",
+        "pin": "",
+        "city": "Tiruchirappalli",
+        "role": "STUDENT",
+        "source_id": "czozOiIzNjIiOw"
+    }
+}

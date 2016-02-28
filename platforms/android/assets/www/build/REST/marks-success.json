@@ -1,0 +1,41 @@
+{
+    "mark_list": [
+        {
+            "score": "95",
+            "subject_name": "Tamil",
+            "abbr": "TA",
+            "exam_name": "Term  - 1 "
+        },
+        {
+            "score": "65",
+            "subject_name": "Shapes&Colors",
+            "abbr": "SNC",
+            "exam_name": "Term  - 1 "
+        },
+        {
+            "score": "65",
+            "subject_name": "Arts (Drawing)",
+            "abbr": "DRW",
+            "exam_name": "Term  - 1 "
+        },
+        {
+            "score": "65",
+            "subject_name": "Puzzles",
+            "abbr": "PUZ",
+            "exam_name": "Term  - 1 "
+        },
+        {
+            "score": "85",
+            "subject_name": "English",
+            "abbr": "EN",
+            "exam_name": "Term  - 1 "
+        },
+        {
+            "score": "75",
+            "subject_name": "Hindi",
+            "abbr": "HI",
+            "exam_name": "Term  - 1 "
+        }
+    ],
+    "status": "SUCCESS"
+}

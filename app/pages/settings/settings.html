@@ -1,0 +1,28 @@
+<ion-navbar *navbar c_theme>
+  <ion-title>Settings</ion-title>
+</ion-navbar>
+
+<ion-content class="settings">
+	<ion-list>
+		<ion-item class="avatar_style">
+			<ion-avatar item-left>
+			  <img src="img/marty-avatar.png">
+			</ion-avatar>
+			<h2>Bhuvana</h2>
+		</ion-item>
+    </ion-list>
+	<ion-list>
+		<ion-item [navPush]="profile">
+			<ion-icon name="contact" item-left large></ion-icon>
+			<h2>Profile</h2>
+		</ion-item>
+		<ion-item [navPush]="security">
+			<ion-icon name="key" item-left large></ion-icon>
+			<h2>Security</h2>
+		</ion-item>
+    </ion-list>
+	<div padding>
+		<button full danger block (click)="logout()" >Logout</button>
+	</div>
+	
+</ion-content>

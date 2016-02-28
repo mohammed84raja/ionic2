@@ -1,0 +1,58 @@
+
+<ion-navbar *navbar c_theme>
+  <ion-title>
+    Profile
+  </ion-title>
+</ion-navbar>
+
+
+<ion-content class="profile">
+	<ion-list>
+		<ion-item>
+			<ion-label stacked>Student Name :</ion-label>
+			<ion-input type="text" [(ngModel)]= "userDetails.name" disabled></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Parent Name :</ion-label>
+			<ion-input type="text" [(ngModel)]= "userDetails.fname"  ></ion-input>
+		</ion-item>
+		
+		<ion-item>
+			<ion-label stacked>Parent Mobile No :</ion-label>
+			<ion-input type="text" [(ngModel)]= "userDetails.mobile"  ></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>DOB (DD/MM/YYYY) :</ion-label>
+			<ion-input type="text" [(ngModel)]= "userDetails.dob" ></ion-input>
+		</ion-item>
+		
+		<ion-item>
+			<ion-label>Gender :</ion-label>
+			<ion-select [(ngModel)]="userDetails.gender" submitText="Okay" cancelText="Cancel">
+				<ion-option value="M">Male</ion-option>
+				<ion-option value="F">Female</ion-option>
+			</ion-select>
+		</ion-item>
+		
+		<ion-item>
+			<ion-label stacked>Address :</ion-label>
+			 <ion-textarea  [(ngModel)]= "userDetails.addr" ></ion-textarea>
+		</ion-item>
+		
+		<ion-item>
+			<ion-label stacked>District :</ion-label>
+			<ion-input type="text" [(ngModel)]= "userDetails.district_id"  ></ion-input>
+		</ion-item>
+		
+		<ion-item>
+			<ion-label stacked>Postal Code :</ion-label>
+			<ion-input type="text" [(ngModel)]= "userDetails.pin"  ></ion-input>
+		</ion-item>
+		
+	</ion-list>
+	<div padding>
+		<button full c_theme block>Save</button>
+	</div>
+</ion-content>

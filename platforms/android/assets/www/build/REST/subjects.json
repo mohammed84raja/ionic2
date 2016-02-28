@@ -1,0 +1,30 @@
+{
+    "source_id": "czozOiIzNjIiOw",
+    "subject_list": [
+        {
+            "subject_name": "Tamil",
+            "abbr": "TA"
+        },
+        {
+            "subject_name": "English",
+            "abbr": "EN"
+        },
+        {
+            "subject_name": "Hindi",
+            "abbr": "HI"
+        },
+        {
+            "subject_name": "Arts (Drawing)",
+            "abbr": "DRW"
+        },
+        {
+            "subject_name": "Shapes&Colors",
+            "abbr": "SNC"
+        },
+        {
+            "subject_name": "Puzzles",
+            "abbr": "PUZ"
+        }
+    ],
+    "status": "SUCCESS"
+}

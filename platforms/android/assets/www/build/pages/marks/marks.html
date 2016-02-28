@@ -1,0 +1,11 @@
+<ion-navbar *navbar c_theme>
+  <ion-title>Marks</ion-title>
+</ion-navbar>
+
+<ion-content class="marks">
+	<ion-list>
+		<a ion-item *ngFor="#item of items" (click)="openNavDetailsPage(item)">
+		  {{ item.title }}
+		</a>
+	</ion-list>
+</ion-content>

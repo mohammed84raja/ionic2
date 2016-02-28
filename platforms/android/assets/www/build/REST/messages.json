@@ -1,0 +1,49 @@
+{
+    "source_id": "czozOiIzNjIiOw",
+    "message_list": [
+        {
+            "creation_date": "2016-02-03 07:23:21",
+            "message": "Standard Level 1st : Test message for celebrating function in PREKG.",
+            "delivered": null,
+            "total_sent": "2",
+            "url": "\/uploads\/attachments\/1636\/81\/173e3c73201fbedc0d7f5953a86d6899.jpg",
+            "filename": "Desert.jpg"
+        },
+        {
+            "creation_date": "2016-01-30 07:38:20",
+            "message": "EID celebrations at care international School",
+            "delivered": null,
+            "total_sent": "1",
+            "url": null,
+            "filename": null
+        },
+        {
+            "creation_date": "2016-01-30 07:37:28",
+            "message": "Project Exhibition at care international School",
+            "delivered": null,
+            "total_sent": "1",
+            "url": null,
+            "filename": null
+        },
+        {
+            "creation_date": "2016-01-30 07:36:33",
+            "message": "Dental Checkup at care international School",
+            "delivered": null,
+            "total_sent": "1",
+            "url": null,
+            "filename": null
+        },
+        {
+            "creation_date": "2016-01-30 07:35:05",
+            "message": "Children's Activities at care international School.",
+            "delivered": null,
+            "total_sent": "1",
+            "url": null,
+            "filename": null
+        }
+    ],
+    "offset": 0,
+    "row_count": 5,
+    "total_rows": "7",
+    "status": "SUCCESS"
+}
