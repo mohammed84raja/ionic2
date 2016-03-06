@@ -23,7 +23,9 @@ export class SingletonService
     setStudent(student:String) {
         this.student = student;
     }
- 
+    setExamType(examId:String) {
+        this.student.exam_id = examId;
+    }
     getStudent() {
         return this.student;
     }

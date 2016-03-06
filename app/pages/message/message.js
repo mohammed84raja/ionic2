@@ -6,20 +6,27 @@ import { CommonService } from '../../services/CommonService';
 	providers: [CommonService]
 })
 export class Message {
-  constructor(nav: NavController, commonService:CommonService) {
+  constructor(nav: NavController, commonService:CommonService, platform: Platform) {
 	this.nav = nav;
+  this.platform = platform;
 		commonService.getAllMessage().subscribe(
 				data => {this.msges = data.message_list; console.log(data);},
 				err => commonService.showErrorMsg(err),
 				() => console.log('Get all message -complete')
        	);
   }
-  
+  showToast() {
+    this.platform.ready().then(() => {
+        window.plugins.toast.show("Sample notification", "short", "top");
+    });
+  }
   openImageModal(characterNum) {
     let myModal = Modal.create(openImageSrc, characterNum);
     this.nav.present(myModal);
   },
-  
+  doRefresh(){
+    console.log("doRefresh");
+  }
   noOfdaysfromToday(cdate) {
 		if(!cdate) {
 			return "";

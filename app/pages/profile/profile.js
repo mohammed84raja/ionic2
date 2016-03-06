@@ -8,10 +8,20 @@ import { CommonService } from '../../services/CommonService';
 })
 export class Profile {
 	constructor(commonService:CommonService) {
+		this.commonService = commonService;
 		this.userDetails = {};
-			commonService.getUserDetails().subscribe(
+		commonService.getUserDetails().subscribe(
 			data => {this.userDetails = data.personal_info;},
 			err => commonService.showErrorMsg(err),
+			() => console.log('Get profile- complete')
+		); 
+	}
+	UpdateUserProfile(){
+		console.log(this.userDetails);
+
+		this.commonService.updateUserProfile(this.userDetails).subscribe(
+			// data => {this.userDetails = data.personal_info;},
+			err => this.commonService.showErrorMsg(err),
 			() => console.log('Get profile- complete')
 		); 
 	}

@@ -31,6 +31,7 @@ export class Examtimetable {
 	constructor(commonService:CommonService, nav: NavController) {
 		this.nav = nav;
 		this.currentTTable = [];
+		this.commonService = commonService;
         commonService.getExamList().subscribe(
 	       	data => {this.items = data.exam_list;},
 	        err => commonService.showErrorMsg(err),
@@ -40,6 +41,7 @@ export class Examtimetable {
 	}
 	
 	openNavDetailsPage(item) {
+		this.commonService.setExamType(item.exam_id);
 		this.nav.push(NavigationDetailsPage, { exam_name: item.name });
 	}
    

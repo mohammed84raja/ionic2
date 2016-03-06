@@ -25,9 +25,18 @@ class MarkDetailsPage {
   providers: [CommonService]
 })
 export class Marks {
-  constructor(nav: NavController) {
+  constructor(nav: NavController, commonService:CommonService) {
 	this.nav = nav;
-		this.items = [
+ 	items = [];
+ 	this.commonService = commonService;
+    commonService.getExamList().subscribe(
+       	data => {this.items = data.exam_list;},
+        err => commonService.showErrorMsg(err),
+        () => console.log('Get all exam detail --complete')
+   	);   
+
+
+		/*this.items = [
 		  {
 			'title': 'Term 1',
 			'description': 'Term 1'
@@ -36,11 +45,12 @@ export class Marks {
 			'title': 'Quarterly',
 			'description': 'Quarterly'
 		  },
-		]
+		]*/
   }
   
   openNavDetailsPage(item) {
-		this.nav.push(MarkDetailsPage, { name: item.title });
+  		this.commonService.setExamType(item.exam_id);
+		this.nav.push(MarkDetailsPage, { name: item.name });
   }
   
 }

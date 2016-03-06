@@ -62158,7 +62158,7 @@
 	            username: this.studenname,
 	            password: this.password
 	        };
-	        this.commonService.studentLogin(param).subscribe(function (data) { _this.processLogin(data); console.log(data); }, function (err) { return commonService.showErrorMsg(err); }, function () { return console.log('Login process -complete'); });
+	        this.commonService.studentLogin(param).subscribe(function (data) { _this.processLogin(data); console.log(data); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Login process -complete'); });
 	    };
 	    Login.prototype.processLogin = function (data) {
 	        if (data.status == 'SUCCESS') {
@@ -62241,11 +62241,17 @@
 	var ionic_1 = __webpack_require__(5);
 	var CommonService_1 = __webpack_require__(361);
 	var Message = (function () {
-	    function Message(nav, commonService) {
+	    function Message(nav, commonService, platform) {
 	        var _this = this;
 	        this.nav = nav;
+	        this.platform = platform;
 	        commonService.getAllMessage().subscribe(function (data) { _this.msges = data.message_list; console.log(data); }, function (err) { return commonService.showErrorMsg(err); }, function () { return console.log('Get all message -complete'); });
 	    }
+	    Message.prototype.showToast = function () {
+	        this.platform.ready().then(function () {
+	            window.plugins.toast.show("Sample notification", "short", "top");
+	        });
+	    };
 	    Message.prototype.openImageModal = function (characterNum) {
 	        var myModal = ionic_1.Modal.create(openImageSrc, characterNum);
 	        this.nav.present(myModal);
@@ -62266,7 +62272,7 @@
 	            templateUrl: 'build/pages/message/message.html',
 	            providers: [CommonService_1.CommonService]
 	        }), 
-	        __metadata('design:paramtypes', [ionic_1.NavController, (typeof (_a = typeof CommonService_1.CommonService !== 'undefined' && CommonService_1.CommonService) === 'function' && _a) || Object])
+	        __metadata('design:paramtypes', [ionic_1.NavController, (typeof (_a = typeof CommonService_1.CommonService !== 'undefined' && CommonService_1.CommonService) === 'function' && _a) || Object, ionic_1.Platform])
 	    ], Message);
 	    return Message;
 	    var _a;
@@ -62319,26 +62325,28 @@
 	__webpack_require__(362);
 	var SingletonService_1 = __webpack_require__(366);
 	var CommonService = (function () {
-	    function CommonService(http, nav, platform) {
+	    function CommonService(http, nav) {
 	        this.nav = nav;
-	        this.platform = platform;
-	        this.serverlocation = "http://localhost:8100/build/REST/";
+	        this.serverlocation = "http://www.agarum.com/api/v1/";
 	        this.http = http;
 	        this.student = {};
 	        this.studentLogin = function (param) {
 	            var uiparams = Object.keys(param).map(function (k) {
 	                return encodeURIComponent(k) + '=' + encodeURIComponent(param[k]);
 	            }).join('&');
-	            var url = this.serverlocation + 'login-success.json';
-	            return this.http.get(url).map(function (res) { return res.json(); });
+	            var url = this.serverlocation + 'user/login/';
+	            // return this.http.get(url).map(res => res.json());
+	            var headers = new Headers();
+	            headers.append('Content-Type', 'application/x-www-form-urlencoded');
+	            return this.http.post(url, uiparams, {
+	                headers: headers
+	            });
 	        };
 	        this.getUserDetails = function () {
-	            /*this.platform.ready().then(() => {
-	            window.plugins.toast.show(message, "short", "top");
-	        });*/
 	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
 	            if (this.student.student_id) {
-	                var url = this.serverlocation + 'profile.json' + "/" + this.student.student_id;
+	                var url = this.serverlocation++;
+	                'profile?user_id=' + this.student.student_id;
 	            }
 	            return this.http.get(url).map(function (res) { return res.json(); });
 	        };
@@ -62377,7 +62385,7 @@
 	    }
 	    CommonService = __decorate([
 	        __param(0, core_1.Inject(http_1.Http)), 
-	        __metadata('design:paramtypes', [http_1.Http, ionic_1.NavController, ionic_2.Platform])
+	        __metadata('design:paramtypes', [http_1.Http, ionic_1.NavController])
 	    ], CommonService);
 	    return CommonService;
 	})();
