@@ -36,6 +36,12 @@
         },
         "phonegap-plugin-push": {
             "PACKAGE_NAME": "io.ionic.starter"
+        },
+        "org.devgeeks.Canvas2ImagePlugin": {
+            "PACKAGE_NAME": "io.ionic.starter"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "io.ionic.starter"
         }
     },
     "dependent_plugins": {}

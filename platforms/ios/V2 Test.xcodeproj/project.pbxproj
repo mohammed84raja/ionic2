@@ -65,6 +65,9 @@
 		9956A776E1064DE4BE0B8E31 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED75A3A5D37406FB641750E /* AddressBook.framework */; };
 		A50B10F78E364549860B463F /* libsqlite3.tbd in Resources */ = {isa = PBXBuildFile; fileRef = 12A1CFB2453D43AFB8FA25D9 /* libsqlite3.tbd */; };
 		5986F29F3EA34C5FB7375687 /* libz.tbd in Resources */ = {isa = PBXBuildFile; fileRef = 21AD180BEB994AE8B997B4E7 /* libz.tbd */; };
+		7CEDD74622AF49F094741564 /* Canvas2ImagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41190FEB6A954CD19F561E0A /* Canvas2ImagePlugin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		ED7F9C4160DC4FF28D84202F /* SQLitePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7D779B4D341C899F4C555 /* SQLitePlugin.m */; };
+		C054548F1C0A4AC3B2FF7AC8 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FA8DA56E6AA458B8C1D6B44 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +190,11 @@
 		3ED75A3A5D37406FB641750E /* AddressBook.framework */ = {isa = PBXFileReference; name = "AddressBook.framework"; path = "System/Library/Frameworks/AddressBook.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		12A1CFB2453D43AFB8FA25D9 /* libsqlite3.tbd */ = {isa = PBXFileReference; name = "libsqlite3.tbd"; path = "libsqlite3.tbd"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		21AD180BEB994AE8B997B4E7 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "libz.tbd"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		41190FEB6A954CD19F561E0A /* Canvas2ImagePlugin.m */ = {isa = PBXFileReference; name = "Canvas2ImagePlugin.m"; path = "org.devgeeks.Canvas2ImagePlugin/Canvas2ImagePlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		3F958534382D4D72AFB10443 /* Canvas2ImagePlugin.h */ = {isa = PBXFileReference; name = "Canvas2ImagePlugin.h"; path = "org.devgeeks.Canvas2ImagePlugin/Canvas2ImagePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		ABF7D779B4D341C899F4C555 /* SQLitePlugin.m */ = {isa = PBXFileReference; name = "SQLitePlugin.m"; path = "cordova-sqlite-storage/SQLitePlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		D57254ACC56D41D5A35B9863 /* SQLitePlugin.h */ = {isa = PBXFileReference; name = "SQLitePlugin.h"; path = "cordova-sqlite-storage/SQLitePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		4FA8DA56E6AA458B8C1D6B44 /* libsqlite3.dylib */ = {isa = PBXFileReference; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +236,7 @@
 				9956A776E1064DE4BE0B8E31 /* AddressBook.framework in Frameworks */,
 				A50B10F78E364549860B463F /* libsqlite3.tbd in Resources */,
 				5986F29F3EA34C5FB7375687 /* libz.tbd in Resources */,
+				C054548F1C0A4AC3B2FF7AC8 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +339,7 @@
 				3ED75A3A5D37406FB641750E /* AddressBook.framework */,
 				12A1CFB2453D43AFB8FA25D9 /* libsqlite3.tbd */,
 				21AD180BEB994AE8B997B4E7 /* libz.tbd */,
+				4FA8DA56E6AA458B8C1D6B44 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -405,6 +415,10 @@
 				89FD37FB311C4773848F3173 /* GCMReceiverDelegate.h */,
 				943868977E79498E85BE841E /* GCMService.h */,
 				70FBB1F9BA4B4D018C0B77F8 /* GoogleCloudMessaging.h */,
+				41190FEB6A954CD19F561E0A /* Canvas2ImagePlugin.m */,
+				3F958534382D4D72AFB10443 /* Canvas2ImagePlugin.h */,
+				ABF7D779B4D341C899F4C555 /* SQLitePlugin.m */,
+				D57254ACC56D41D5A35B9863 /* SQLitePlugin.h */,
 			);
 			name = Plugins;
 			path = "V2 Test/Plugins";
@@ -536,6 +550,8 @@
 				B247B43496204E24A5FAE1D1 /* CDVAssetLibraryFilesystem.m in Sources */,
 				3FDBDCC267DB42F1A40C0562 /* AppDelegate+notification.m in Sources */,
 				8361305FC6A1447F941698DE /* PushPlugin.m in Sources */,
+				7CEDD74622AF49F094741564 /* Canvas2ImagePlugin.m in Sources */,
+				ED7F9C4160DC4FF28D84202F /* SQLitePlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

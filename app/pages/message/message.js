@@ -5,10 +5,12 @@ import { CommonService } from '../../services/CommonService';
 	templateUrl: 'build/pages/message/message.html',
 	providers: [CommonService]
 })
+
 export class Message {
   constructor(nav: NavController, commonService:CommonService, platform: Platform) {
 	this.nav = nav;
   this.platform = platform;
+  this.commonService = commonService;
 	commonService.getAllMessage().subscribe(
 			data => {this.msges = data.message_list; console.log(data);},
 			err => commonService.showErrorMsg(err),
@@ -22,17 +24,18 @@ export class Message {
   }
   openImageModal(characterNum) {
     let myModal = Modal.create(openImageSrc, characterNum);
-    this.nav.present(myModal);
+    this.nav.present(myModal);   
   }
   
  doRefresh(refresher) {
-  alert("Refresh")
+ 
     console.log('Doing Refresh', refresher)
 
-    setTimeout(() => {
-      refresher.complete();
-      console.log("Complete");
-    }, 5000);
+    this.commonService.getAllMessage().subscribe(
+        data => {this.msges = data.message_list; refresher.complete();},
+        err => this.commonService.showErrorMsg(err),
+        () => console.log('Get all message -complete')
+        );
   }
 
   doStart(refresher) {
@@ -42,8 +45,6 @@ export class Message {
   doPulling(refresher) {
     console.log('Pulling', refresher);
   }
-
-
 
   noOfdaysfromToday(cdate) {
 		if(!cdate) {

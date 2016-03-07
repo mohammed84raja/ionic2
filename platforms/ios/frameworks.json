@@ -5,5 +5,6 @@
     "AVFoundation.framework": 1,
     "AddressBook.framework": 1,
     "libsqlite3.tbd": 1,
-    "libz.tbd": 1
+    "libz.tbd": 1,
+    "libsqlite3.dylib": 1
 }

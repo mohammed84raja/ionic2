@@ -1,5 +1,5 @@
 import {NavController, NavParams} from 'ionic-framework';
-import {Page} from 'ionic-framework';
+import {Page, Pipe, PipeTransform} from 'ionic-framework';
 import {forwardRef} from 'angular2/core';
 import { CommonService } from '../../services/CommonService';
 
@@ -19,6 +19,9 @@ class NavigationDetailsPage {
 		);
 		
 		this.selection = { title: params.data.exam_name };
+  }
+  changeDateFormate(date){
+  	return new Date(date);
   }
 }
 

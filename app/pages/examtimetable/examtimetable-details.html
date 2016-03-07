@@ -7,7 +7,7 @@
 <ion-content>
 	<ion-list>
 		<ion-item *ngFor="#ttable of timetable">
-			<ion-badge item-left>{{ttable.exam_date}}</ion-badge>
+			<ion-badge item-left>{{changeDateFormate(ttable.exam_date) | date:"MMM d, h:mm a"}}</ion-badge>
 			<ion-label>{{ttable.subject_name}}</ion-label>
 		</ion-item>
 	</ion-list>

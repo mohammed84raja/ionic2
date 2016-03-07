@@ -1,4 +1,4 @@
-import {App, Platform} from 'ionic-framework';
+import {App, Platform, Storage, SqlStorage} from 'ionic-framework';
 import {Inject} from 'angular2/core';
 import {Login} from './pages/login/login';
 import {Message} from './pages/message/message';
@@ -10,6 +10,8 @@ import {Message} from './pages/message/message';
 })
 export class MyApp {
   constructor(@Inject(Platform) platform) {
+    this.platform = platform;
+    this.initializeApp();
     this.rootPage = Login;
 
     platform.ready().then(() => {
@@ -29,4 +31,14 @@ export class MyApp {
       // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
     });
   }
+  initializeApp() {
+        this.platform.ready().then(() => {
+            this.storage = new Storage(SqlStorage);
+            this.storage.query('CREATE TABLE IF NOT EXISTS student (studentId TEXT, userId TEXT)').then((data) => {
+                console.log("TABLE CREATED -> " + JSON.stringify(data.res));
+            }, (error) => {
+                console.log("ERROR -> " + JSON.stringify(error.err));
+            });
+        });
+    }
 }

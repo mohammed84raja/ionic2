@@ -29,7 +29,8 @@
       "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin",
       "id": "cordova-plugin-x-toast"
     },
-    "phonegap-plugin-push"
+    "phonegap-plugin-push",
+    "cordova-sqlite-storage"
   ],
   "cordovaPlatforms": [
     "android",
