@@ -1,4 +1,4 @@
-import {Page} from 'ionic-framework/ionic';
+import {Page} from 'ionic-framework';
 import {Classtimetable} from '../classtimetable/classtimetable';
 import {Examtimetable} from '../examtimetable/examtimetable';
 

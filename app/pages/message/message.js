@@ -1,4 +1,4 @@
-import {App, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-framework/ionic';
+import {App, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-framework';
 import { CommonService } from '../../services/CommonService';
 
 @Page({
@@ -9,11 +9,11 @@ export class Message {
   constructor(nav: NavController, commonService:CommonService, platform: Platform) {
 	this.nav = nav;
   this.platform = platform;
-		commonService.getAllMessage().subscribe(
-				data => {this.msges = data.message_list; console.log(data);},
-				err => commonService.showErrorMsg(err),
-				() => console.log('Get all message -complete')
-       	);
+	commonService.getAllMessage().subscribe(
+			data => {this.msges = data.message_list; console.log(data);},
+			err => commonService.showErrorMsg(err),
+			() => console.log('Get all message -complete')
+     	);
   }
   showToast() {
     this.platform.ready().then(() => {
@@ -23,10 +23,28 @@ export class Message {
   openImageModal(characterNum) {
     let myModal = Modal.create(openImageSrc, characterNum);
     this.nav.present(myModal);
-  },
-  doRefresh(){
-    console.log("doRefresh");
   }
+  
+ doRefresh(refresher) {
+  alert("Refresh")
+    console.log('Doing Refresh', refresher)
+
+    setTimeout(() => {
+      refresher.complete();
+      console.log("Complete");
+    }, 5000);
+  }
+
+  doStart(refresher) {
+    console.log('Doing Start', refresher);
+  }
+
+  doPulling(refresher) {
+    console.log('Pulling', refresher);
+  }
+
+
+
   noOfdaysfromToday(cdate) {
 		if(!cdate) {
 			return "";

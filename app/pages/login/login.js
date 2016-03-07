@@ -1,5 +1,5 @@
-import {NavController, NavParams} from 'ionic-framework/ionic';
-import {Page} from 'ionic-framework/ionic';
+import {NavController, NavParams} from 'ionic-framework';
+import {Page} from 'ionic-framework';
 import {TabsPage} from '../tabs/tabs';
 import {Signup} from '../signup/signup';
 import { CommonService } from '../../services/CommonService';
@@ -32,22 +32,24 @@ export class Login {
 	  
   }
   processLogin(data) {
+    debugger;
   	if(data.status == 200 || data.status == 'success') {
       //hack code
-      data = {
+     /* data = {
         user_id: "czozOiI5NTciOw",
         student_id : "czozOiIzNjciOw"
-      }
-  		if(data.student_id){
+      }*/
+       var userData =  JSON.parse(data._body);
+  		if(userData.student_id){
 
-        SingletonService.getInstance().setStudent(data);
+        SingletonService.getInstance().setStudent(userData);
   			this.nav.push(TabsPage, { name : 'login' });
   		}else{
-        this.commonService.showErrorMsg("Login failed!!!" + data);
+        this.commonService.showErrorMsg(data);
       }
   		
   	} else {
-  		this.commonService.showErrorMsg("Login failed!!!" + data);
+  		this.commonService.showErrorMsg(data);
   	}
  
   }

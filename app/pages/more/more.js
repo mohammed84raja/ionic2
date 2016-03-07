@@ -1,5 +1,5 @@
-import {NavController, NavParams} from 'ionic-framework/ionic';
-import {Page} from 'ionic-framework/ionic';
+import {NavController, NavParams} from 'ionic-framework';
+import {Page} from 'ionic-framework';
 import {Subject} from '../subject/subject';
 import {Events} from '../events/events';
 import {Transport} from '../transport/transport';

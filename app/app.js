@@ -1,4 +1,4 @@
-import {App, Platform} from 'ionic-framework/ionic';
+import {App, Platform} from 'ionic-framework';
 import {Inject} from 'angular2/core';
 import {Login} from './pages/login/login';
 import {Message} from './pages/message/message';

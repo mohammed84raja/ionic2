@@ -1,4 +1,4 @@
-import {Page, Platform} from 'ionic-framework/ionic';
+import {Page, Platform} from 'ionic-framework';
 import {forwardRef} from 'angular2/core';
 
 @Page({

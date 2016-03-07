@@ -1,7 +1,7 @@
 
 import { Inject} from 'angular2/core';
-import {Alert, NavController} from 'ionic-framework/ionic';
-import { Http } from 'angular2/http';
+import {Alert, NavController} from 'ionic-framework';
+import { Http , Headers} from 'angular2/http';
 import 'rxjs/add/operator/map';
 import { SingletonService } from '../services/SingletonService';
 
@@ -14,15 +14,16 @@ export class CommonService {
         this.http = http;
         this.student = {};
 	    this.studentLogin = function(param) {	  
-	        var uiparams = Object.keys(param).map(function(k) {
+	      var uiparams = Object.keys(param).map(function(k) {
 			    return encodeURIComponent(k) + '=' + encodeURIComponent(param[k])
 			}).join('&');
 		    var url = this.serverlocation +'user/login';
 
 			var headers = new Headers();
 			headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-			return this.http.post(url, "username=9986559929&password=abc123", {
+			
+//"username=9986559929&password=abc123"
+			return this.http.post(url, uiparams , {
 				headers: headers
 			});
 	    }
@@ -92,7 +93,6 @@ export class CommonService {
         	if(this.student.student_id){
         		var url = this.serverlocation +'student/subjects?student_id='+this.student.student_id;
         	}
-		    //var url = this.serverlocation + 'subjects.json';
 		    return this.http.get(url).map(res => res.json());
 		}
 		this.showErrorMsg = function(msg) {

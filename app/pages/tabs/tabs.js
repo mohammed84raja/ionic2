@@ -1,4 +1,4 @@
-import {Page} from 'ionic-framework/ionic';
+import {Page} from 'ionic-framework';
 import {Message} from '../message/message';
 import {More} from '../more/more';
 import {Timetable} from '../timetable/timetable';

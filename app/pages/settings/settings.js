@@ -1,5 +1,5 @@
-import {NavController, NavParams} from 'ionic-framework/ionic';
-import {Page} from 'ionic-framework/ionic';
+import {NavController, NavParams} from 'ionic-framework';
+import {Page} from 'ionic-framework';
 import {Profile} from '../profile/profile';
 import {Security} from '../security/security';
 import {Login} from '../login/login';

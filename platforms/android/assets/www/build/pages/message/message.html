@@ -3,6 +3,14 @@
 </ion-navbar>
 
 <ion-content padding class="message">
+	 <ion-refresher 
+		pulling-text="Pull To Refresh"
+		refreshing-text="Fetching ..." 
+		refreshing-icon="ion-loading-b"
+		(start)="doStart($event)"
+		(refresh)="doRefresh($event)"
+		(pulling)="doPulling($event)">
+  	</ion-refresher>
 	<ion-card *ngFor="#msg of msges">
 		<!--<ion-item>
 			<img src="img/photo1.jpg" (click)="openImageModal('img/photo1.jpg')" width="100" height="100" class="image-list-thumb"/>
@@ -13,7 +21,7 @@
 			</p>
 		</ion-card-content>
 		<ion-item>
-			<ion-note item-right>{{msg.creation_date}} days ago</ion-note>
+			<ion-note item-right>{{noOfdaysfromToday(msg.creation_date)}} days ago</ion-note>
 		</ion-item>
 	</ion-card>
 	

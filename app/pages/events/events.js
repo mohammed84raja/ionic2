@@ -1,5 +1,5 @@
-import {App, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-framework/ionic';
-import {Page} from 'ionic-framework/ionic';
+import {App, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-framework';
+import {Page} from 'ionic-framework';
 import {forwardRef} from 'angular2/core';
 
 @Page({

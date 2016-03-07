@@ -1,5 +1,5 @@
-import {NavController, NavParams} from 'ionic-framework/ionic';
-import {Page} from 'ionic-framework/ionic';
+import {NavController, NavParams} from 'ionic-framework';
+import {Page} from 'ionic-framework';
 import {forwardRef} from 'angular2/core';
 import { CommonService } from '../../services/CommonService';
 
