@@ -8,20 +8,20 @@
 	
 	<ion-list>
 		<ion-item>
-			<ion-input placeholder="Current Password" type="password" value=""></ion-input>
+			<ion-input placeholder="Current Password" type="password" value="" [(ngModel)]= "info.current_password" ></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-input placeholder="New Password" type="password"></ion-input>
+			<ion-input placeholder="New Password" type="password" [(ngModel)]= "info.new_password" ></ion-input>
 		</ion-item>
 		
 		<ion-item>
-			<ion-input placeholder="Confirm Password" type="password"></ion-input>
+			<ion-input placeholder="Confirm Password" type="password" [(ngModel)]= "info.confirm_password" ></ion-input>
 		</ion-item>
 
 	</ion-list>
 	<div padding>
-		<button full c_theme block>Save</button>
+		<button full c_theme block (click)="changePassword()">Save</button>
 	</div>
   
 </ion-content>

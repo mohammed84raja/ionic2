@@ -34,7 +34,7 @@ export class MyApp {
   initializeApp() {
         this.platform.ready().then(() => {
             this.storage = new Storage(SqlStorage);
-            this.storage.query('CREATE TABLE IF NOT EXISTS student (studentId TEXT, userId TEXT)').then((data) => {
+            this.storage.query('CREATE TABLE IF NOT EXISTS people (id INTEGER PRIMARY KEY AUTOINCREMENT, firstname TEXT, lastname TEXT)').then((data) => {
                 console.log("TABLE CREATED -> " + JSON.stringify(data.res));
             }, (error) => {
                 console.log("ERROR -> " + JSON.stringify(error.err));

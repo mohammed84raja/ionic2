@@ -18,9 +18,10 @@ export class Login {
   	this.studentSignup	= Signup;
   	this.studenname = "";
   	this.password = "";
+    this.people = [];
     this.platform.ready().then(() => {
             this.storage = new Storage(SqlStorage);
-            //this.refresh();
+            this.refresh();
         });
   }
   
@@ -42,7 +43,7 @@ export class Login {
   		if(userData.student_id){
 
         SingletonService.getInstance().setStudent(userData);
-        this.addUser(userData.student_id, userData.user_id);
+       this.addUser(userData.student_id, userData.user_id);
   			this.nav.push(TabsPage, { name : 'login' });
   		}else{
         this.commonService.showErrorMsg(data);
@@ -57,18 +58,27 @@ export class Login {
       this.studentId = studentId;
       this.userId = userId;
         this.platform.ready().then(() => {
-          console.log("============================================");
-          console.log("INSERT INTO student (studentId, userId) VALUES (\""+this.studentId+"\", \""+this.userId+"\")");
-
-            this.storage.query("INSERT INTO student(studentId,userId) VALUES(\""+this.studentId+"\", \""+this.userId+"\")").then((data) => {
-                console.log("User added successful");
+            this.storage.query("INSERT INTO people (firstname, lastname) VALUES ('Nic', 'Raboy')").then((data) => {
                 console.log(JSON.stringify(data.res));
-
             }, (error) => {
                 console.log("ERROR -> " + JSON.stringify(error.err));
             });
         });
     }
-  
+   refresh() {
+        this.platform.ready().then(() => {
+          console.log("00000000000000000000000000");
+            this.storage.query("SELECT * FROM people").then((data) => {
+                this.people = [];
+                if(data.res.rows.length > 0) {
+                    for(var i = 0; i < data.res.rows.length; i++) {
+                        this.people.push({firstname: data.res.rows.item(i).firstname, lastname: data.res.rows.item(i).lastname});
+                    }
+                }
+            }, (error) => {
+                console.log("ERROR -> " + JSON.stringify(error.err));
+            });
+        });
+    }
   
 }

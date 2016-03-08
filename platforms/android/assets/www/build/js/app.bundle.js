@@ -3192,6 +3192,8 @@
 	var login_1 = __webpack_require__(361);
 	var MyApp = (function () {
 	    function MyApp(platform) {
+	        this.platform = platform;
+	        this.initializeApp();
 	        this.rootPage = login_1.Login;
 	        platform.ready().then(function () {
 	            // The platform is now ready. Note: if this callback fails to fire, follow
@@ -3210,6 +3212,17 @@
 	            // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
 	        });
 	    }
+	    MyApp.prototype.initializeApp = function () {
+	        var _this = this;
+	        this.platform.ready().then(function () {
+	            _this.storage = new ionic_framework_1.Storage(ionic_framework_1.SqlStorage);
+	            _this.storage.query('CREATE TABLE IF NOT EXISTS people (id INTEGER PRIMARY KEY AUTOINCREMENT, firstname TEXT, lastname TEXT)').then(function (data) {
+	                console.log("TABLE CREATED -> " + JSON.stringify(data.res));
+	            }, function (error) {
+	                console.log("ERROR -> " + JSON.stringify(error.err));
+	            });
+	        });
+	    };
 	    MyApp = __decorate([
 	        ionic_framework_1.App({
 	            template: '<ion-nav [root]="rootPage"></ion-nav>',
@@ -63088,13 +63101,20 @@
 	var CommonService_1 = __webpack_require__(364);
 	var SingletonService_1 = __webpack_require__(369);
 	var Login = (function () {
-	    function Login(nav, params, commonService) {
+	    function Login(nav, params, commonService, platform) {
+	        var _this = this;
 	        this.commonService = commonService;
 	        this.nav = nav;
+	        this.platform = platform;
 	        this.nav.swipeBackEnabled = false;
 	        this.studentSignup = signup_1.Signup;
 	        this.studenname = "";
 	        this.password = "";
+	        this.people = [];
+	        this.platform.ready().then(function () {
+	            _this.storage = new ionic_framework_1.Storage(ionic_framework_1.SqlStorage);
+	            _this.refresh();
+	        });
 	    }
 	    Login.prototype.studentLogin = function () {
 	        var _this = this;
@@ -63109,6 +63129,7 @@
 	            var userData = JSON.parse(data._body);
 	            if (userData.student_id) {
 	                SingletonService_1.SingletonService.getInstance().setStudent(userData);
+	                this.addUser(userData.student_id, userData.user_id);
 	                this.nav.push(tabs_1.TabsPage, { name: 'login' });
 	            }
 	            else {
@@ -63119,12 +63140,40 @@
 	            this.commonService.showErrorMsg(data);
 	        }
 	    };
+	    Login.prototype.addUser = function (studentId, userId) {
+	        var _this = this;
+	        this.studentId = studentId;
+	        this.userId = userId;
+	        this.platform.ready().then(function () {
+	            _this.storage.query("INSERT INTO people (firstname, lastname) VALUES ('Nic', 'Raboy')").then(function (data) {
+	                console.log(JSON.stringify(data.res));
+	            }, function (error) {
+	                console.log("ERROR -> " + JSON.stringify(error.err));
+	            });
+	        });
+	    };
+	    Login.prototype.refresh = function () {
+	        var _this = this;
+	        this.platform.ready().then(function () {
+	            console.log("00000000000000000000000000");
+	            _this.storage.query("SELECT * FROM people").then(function (data) {
+	                _this.people = [];
+	                if (data.res.rows.length > 0) {
+	                    for (var i = 0; i < data.res.rows.length; i++) {
+	                        _this.people.push({ firstname: data.res.rows.item(i).firstname, lastname: data.res.rows.item(i).lastname });
+	                    }
+	                }
+	            }, function (error) {
+	                console.log("ERROR -> " + JSON.stringify(error.err));
+	            });
+	        });
+	    };
 	    Login = __decorate([
 	        ionic_framework_2.Page({
 	            templateUrl: 'build/pages/login/login.html',
 	            providers: [CommonService_1.CommonService]
 	        }), 
-	        __metadata('design:paramtypes', [ionic_framework_1.NavController, ionic_framework_1.NavParams, (typeof (_a = typeof CommonService_1.CommonService !== 'undefined' && CommonService_1.CommonService) === 'function' && _a) || Object])
+	        __metadata('design:paramtypes', [ionic_framework_1.NavController, ionic_framework_1.NavParams, (typeof (_a = typeof CommonService_1.CommonService !== 'undefined' && CommonService_1.CommonService) === 'function' && _a) || Object, ionic_framework_1.Platform])
 	    ], Login);
 	    return Login;
 	    var _a;
@@ -63226,6 +63275,13 @@
 	        var noOfDaysDiff = parseInt(diffInMilliseconds / oneDay, 10);
 	        return noOfDaysDiff;
 	    };
+	    Message.prototype.trimMessage = function (msg) {
+	        if (msg.length > 100) {
+	            msg = msg.substring(0, 100);
+	            msg = msg + "...";
+	        }
+	        return msg;
+	    };
 	    Message = __decorate([
 	        ionic_framework_1.Page({
 	            templateUrl: 'build/pages/message/message.html',
@@ -63301,6 +63357,19 @@
 	                headers: headers
 	            });
 	        };
+	        this.changePassword = function (param) {
+	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
+	            param.user_id = this.student["user_id"];
+	            var uiparams = Object.keys(param).map(function (k) {
+	                return encodeURIComponent(k) + '=' + encodeURIComponent(param[k]);
+	            }).join('&');
+	            var url = this.serverlocation + 'user/security';
+	            var headers = new http_1.Headers();
+	            headers.append('Content-Type', 'application/x-www-form-urlencoded');
+	            return this.http.put(url, uiparams, {
+	                headers: headers
+	            });
+	        };
 	        this.updateUserProfile = function (param) {
 	            var uiparams = Object.keys(param).map(function (k) {
 	                return encodeURIComponent(k) + '=' + encodeURIComponent(param[k]);
@@ -63364,7 +63433,7 @@
 	            }
 	            return this.http.get(url).map(function (res) { return res.json(); });
 	        };
-	        this.showErrorMsg = function (msg) {
+	        this.showErrorMsg = function (msg, msgTitle) {
 	            console.log("ShowErrorMsg function");
 	            console.log(msg);
 	            if (msg._body) {
@@ -63372,7 +63441,7 @@
 	                msg = msg.message;
 	            }
 	            var alert = ionic_framework_1.Alert.create({
-	                title: 'Error',
+	                title: (msgTitle ? "" : 'Error'),
 	                body: msg,
 	                buttons: ['Ok']
 	            });
@@ -64023,9 +64092,31 @@
 	    Profile.prototype.UpdateUserProfile = function () {
 	        var _this = this;
 	        console.log(this.userDetails);
-	        this.commonService.updateUserProfile(this.userDetails).subscribe(
-	        // data => {this.userDetails = data.personal_info;},
-	        function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Get profile- complete'); });
+	        //process user data
+	        var user = {};
+	        user.name = this.userDetails.student_name;
+	        user.address = this.userDetails.addr;
+	        user.district = this.userDetails.district_id;
+	        user.gender = this.userDetails.gender;
+	        user.mobile = this.userDetails.mobile;
+	        user.contact_id = this.userDetails.contact_id;
+	        user.data_of_birth = this.userDetails.dob;
+	        user.pin_code = this.userDetails.pin;
+	        user.phone = this.userDetails.phone;
+	        this.commonService.updateUserProfile(user).subscribe(function (data) { return _this.profileChangedSuccessfully(data); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Get profile- complete'); });
+	    };
+	    Profile.prototype.profileChangedSuccessfully = function (data) {
+	        var msg = "";
+	        var response = null;
+	        if (data._body) {
+	            response = JSON.parse(data._body);
+	            if (response.status == "SUCCESS") {
+	                this.commonService.showErrorMsg("Updated!", "Success");
+	            }
+	            else {
+	                this.commonService.showErrorMsg(data);
+	            }
+	        }
 	    };
 	    Profile = __decorate([
 	        ionic_framework_1.Page({
@@ -64054,16 +64145,39 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_framework_1 = __webpack_require__(5);
+	var CommonService_1 = __webpack_require__(364);
 	var Security = (function () {
-	    function Security() {
+	    function Security(commonService) {
+	        this.info = {};
+	        this.commonService = commonService;
 	    }
+	    Security.prototype.changePassword = function () {
+	        var _this = this;
+	        this.commonService.changePassword(this.info).subscribe(function (data) { _this.passwordChangeSuccessfully(data); console.log(data); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Login process -complete'); });
+	    };
+	    Security.prototype.passwordChangeSuccessfully = function (data) {
+	        debugger;
+	        var msg = "";
+	        var response = null;
+	        if (data._body) {
+	            response = JSON.parse(data._body);
+	            if (response.status == "SUCCESS") {
+	                this.commonService.showErrorMsg("Password changes successfully", "Success");
+	            }
+	            else {
+	                this.commonService.showErrorMsg(data);
+	            }
+	        }
+	    };
 	    Security = __decorate([
 	        ionic_framework_1.Page({
-	            templateUrl: 'build/pages/security/security.html'
+	            templateUrl: 'build/pages/security/security.html',
+	            providers: [CommonService_1.CommonService]
 	        }), 
-	        __metadata('design:paramtypes', [])
+	        __metadata('design:paramtypes', [(typeof (_a = typeof CommonService_1.CommonService !== 'undefined' && CommonService_1.CommonService) === 'function' && _a) || Object])
 	    ], Security);
 	    return Security;
+	    var _a;
 	})();
 	exports.Security = Security;
 

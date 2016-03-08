@@ -27,6 +27,22 @@ export class CommonService {
 				headers: headers
 			});
 	    }
+	    this.changePassword = function(param) {
+
+	    	this.student = SingletonService.getInstance().getStudent();
+	    	param.user_id = this.student["user_id"];
+	        var uiparams = Object.keys(param).map(function(k) {
+			    return encodeURIComponent(k) + '=' + encodeURIComponent(param[k])
+			}).join('&');
+		    var url = this.serverlocation +'user/security';
+
+			var headers = new Headers();
+			headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+			return this.http.put(url, uiparams, {
+				headers: headers
+			});
+	    }
 	    this.updateUserProfile = function(param) {  
 	        var uiparams = Object.keys(param).map(function(k) {
 			    return encodeURIComponent(k) + '=' + encodeURIComponent(param[k])
@@ -95,7 +111,7 @@ export class CommonService {
         	}
 		    return this.http.get(url).map(res => res.json());
 		}
-		this.showErrorMsg = function(msg) {
+		this.showErrorMsg = function(msg, msgTitle) {
 			console.log("ShowErrorMsg function");
 			console.log(msg);
 			if(msg._body){
@@ -103,7 +119,7 @@ export class CommonService {
 				msg = msg.message;
 			}
 			let alert = Alert.create({
-		      title: 'Error',
+		      title: (msgTitle ? "" :'Error'),
 		      body: msg,
 		      buttons: ['Ok']
 		    });

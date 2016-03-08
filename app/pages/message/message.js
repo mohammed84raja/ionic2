@@ -57,6 +57,14 @@ export class Message {
 		var noOfDaysDiff = parseInt(diffInMilliseconds / oneDay, 10);
 		return noOfDaysDiff;
   }
+  trimMessage(msg) {
+    var maxLen = 20;
+    if(msg.length > maxLen){
+      msg = msg.substring(0, maxLen);
+      msg = msg + "...";
+    }
+    return msg;
+  }
   
 }
 
