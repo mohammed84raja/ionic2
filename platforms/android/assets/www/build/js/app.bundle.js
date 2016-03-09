@@ -3195,6 +3195,7 @@
 	        this.platform = platform;
 	        this.initializeApp();
 	        this.rootPage = login_1.Login;
+	        this.user = [];
 	        platform.ready().then(function () {
 	            // The platform is now ready. Note: if this callback fails to fire, follow
 	            // the Troubleshooting guide for a number of possible solutions:
@@ -3216,7 +3217,29 @@
 	        var _this = this;
 	        this.platform.ready().then(function () {
 	            _this.storage = new ionic_framework_1.Storage(ionic_framework_1.SqlStorage);
-	            _this.storage.query('CREATE TABLE IF NOT EXISTS people (id INTEGER PRIMARY KEY AUTOINCREMENT, firstname TEXT, lastname TEXT)').then(function (data) {
+	            //check if user table exist and have records
+	            /*
+	               this.storage.query("SELECT * FROM user").then((data) => {
+	                    this.user = [];
+	                    if(data.res.rows.length > 0) {
+	                        for(var i = 0; i < data.res.rows.length; i++) {
+	                            this.user.push({userId: data.res.rows.item(i).userId, studentId: data.res.rows.item(i).studentId});
+	                        }
+	                    }
+	                    if(this.user.length > 0){
+	                      var userData = {
+	                        user_id : userId,
+	                        student_id : studentId
+	                      }
+	                      console.log("user Date");
+	                      console.log(userData);
+	                      SingletonService.getInstance().setStudent(userData);
+	                    }
+	                }, (error) => {
+	                    console.log("ERROR -> " + JSON.stringify(error.err));
+	                });
+	            */
+	            _this.storage.query('CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, studentId TEXT)').then(function (data) {
 	                console.log("TABLE CREATED -> " + JSON.stringify(data.res));
 	            }, function (error) {
 	                console.log("ERROR -> " + JSON.stringify(error.err));
@@ -63110,7 +63133,7 @@
 	        this.studentSignup = signup_1.Signup;
 	        this.studenname = "";
 	        this.password = "";
-	        this.people = [];
+	        this.user = [];
 	        this.platform.ready().then(function () {
 	            _this.storage = new ionic_framework_1.Storage(ionic_framework_1.SqlStorage);
 	            _this.refresh();
@@ -63145,7 +63168,7 @@
 	        this.studentId = studentId;
 	        this.userId = userId;
 	        this.platform.ready().then(function () {
-	            _this.storage.query("INSERT INTO people (firstname, lastname) VALUES ('Nic', 'Raboy')").then(function (data) {
+	            _this.storage.query("INSERT INTO user (userId, studentId) VALUES ('" + _this.userId + "', '" + _this.studentId + "')").then(function (data) {
 	                console.log(JSON.stringify(data.res));
 	            }, function (error) {
 	                console.log("ERROR -> " + JSON.stringify(error.err));
@@ -63155,12 +63178,11 @@
 	    Login.prototype.refresh = function () {
 	        var _this = this;
 	        this.platform.ready().then(function () {
-	            console.log("00000000000000000000000000");
-	            _this.storage.query("SELECT * FROM people").then(function (data) {
-	                _this.people = [];
+	            _this.storage.query("SELECT * FROM user").then(function (data) {
+	                _this.user = [];
 	                if (data.res.rows.length > 0) {
 	                    for (var i = 0; i < data.res.rows.length; i++) {
-	                        _this.people.push({ firstname: data.res.rows.item(i).firstname, lastname: data.res.rows.item(i).lastname });
+	                        _this.user.push({ firstname: data.res.rows.item(i).firstname, lastname: data.res.rows.item(i).lastname });
 	                    }
 	                }
 	            }, function (error) {
@@ -63244,19 +63266,23 @@
 	        this.commonService = commonService;
 	        commonService.getAllMessage().subscribe(function (data) { _this.msges = data.message_list; console.log(data); }, function (err) { return commonService.showErrorMsg(err); }, function () { return console.log('Get all message -complete'); });
 	    }
-	    Message.prototype.showToast = function () {
-	        this.platform.ready().then(function () {
-	            window.plugins.toast.show("Sample notification", "short", "top");
-	        });
-	    };
-	    Message.prototype.openImageModal = function (characterNum) {
-	        var myModal = ionic_framework_1.Modal.create(openImageSrc, characterNum);
-	        this.nav.present(myModal);
-	    };
+	    /*showToast() {
+	      this.platform.ready().then(() => {
+	          window.plugins.toast.show("Sample notification", "short", "top");
+	      });
+	    }
+	    openImageModal(characterNum) {
+	      let myModal = Modal.create(openImageSrc, characterNum);
+	      this.nav.present(myModal);
+	    }*/
 	    Message.prototype.doRefresh = function (refresher) {
 	        var _this = this;
-	        console.log('Doing Refresh', refresher);
-	        this.commonService.getAllMessage().subscribe(function (data) { _this.msges = data.message_list; refresher.complete(); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Get all message -complete'); });
+	        this.commonService.getAllMessage().subscribe(function (data) { _this.addMessages(data.message_list); refresher.complete(); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Get all message -complete'); });
+	    };
+	    Message.prototype.getData = function () {
+	    };
+	    Message.prototype.addMessages = function (data) {
+	        this.msges = this.msges.concat(data);
 	    };
 	    Message.prototype.doStart = function (refresher) {
 	        console.log('Doing Start', refresher);
@@ -63276,8 +63302,9 @@
 	        return noOfDaysDiff;
 	    };
 	    Message.prototype.trimMessage = function (msg) {
-	        if (msg.length > 100) {
-	            msg = msg.substring(0, 100);
+	        var maxLen = 20;
+	        if (msg.length > maxLen) {
+	            msg = msg.substring(0, maxLen);
 	            msg = msg + "...";
 	        }
 	        return msg;
@@ -63341,6 +63368,10 @@
 	var SingletonService_1 = __webpack_require__(369);
 	var CommonService = (function () {
 	    function CommonService(http, nav) {
+	        this.aLocalStorage = {
+	            getAllMessages: function () {
+	            }
+	        };
 	        this.nav = nav;
 	        this.serverlocation = "http://www.agarum.com/api/v1/";
 	        this.http = http;
@@ -63422,7 +63453,7 @@
 	        this.getAllMessage = function () {
 	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
 	            if (this.student.student_id) {
-	                var url = this.serverlocation + 'student/messages?student_id=' + this.student.student_id;
+	                var url = this.serverlocation + 'student/messages?student_id=' + this.student.student_id + '/' + SingletonService_1.SingletonService.getInstance().getMessageOffset();
 	            }
 	            return this.http.get(url).map(function (res) { return res.json(); });
 	        };
@@ -63560,6 +63591,7 @@
 
 	var SingletonService = (function () {
 	    function SingletonService() {
+	        this.msgOffset = 0;
 	        if (!SingletonService.isCreating) {
 	            throw new Error("You can't call new in Singleton instances!");
 	        }
@@ -63580,6 +63612,10 @@
 	    };
 	    SingletonService.prototype.getStudent = function () {
 	        return this.student;
+	    };
+	    SingletonService.prototype.getMessageOffset = function () {
+	        this.msgOffset = this.msgOffset + 10;
+	        return this.msgOffset;
 	    };
 	    SingletonService.isCreating = false;
 	    return SingletonService;
@@ -64156,7 +64192,6 @@
 	        this.commonService.changePassword(this.info).subscribe(function (data) { _this.passwordChangeSuccessfully(data); console.log(data); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Login process -complete'); });
 	    };
 	    Security.prototype.passwordChangeSuccessfully = function (data) {
-	        debugger;
 	        var msg = "";
 	        var response = null;
 	        if (data._body) {

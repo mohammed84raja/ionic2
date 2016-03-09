@@ -17,7 +17,7 @@ export class Message {
 			() => console.log('Get all message -complete')
      	);
   }
-  showToast() {
+  /*showToast() {
     this.platform.ready().then(() => {
         window.plugins.toast.show("Sample notification", "short", "top");
     });
@@ -25,19 +25,21 @@ export class Message {
   openImageModal(characterNum) {
     let myModal = Modal.create(openImageSrc, characterNum);
     this.nav.present(myModal);   
-  }
+  }*/
   
- doRefresh(refresher) {
- 
-    console.log('Doing Refresh', refresher)
-
+ doRefresh(refresher) { 
     this.commonService.getAllMessage().subscribe(
-        data => {this.msges = data.message_list; refresher.complete();},
+        data => {this.addMessages(data.message_list); refresher.complete();},
         err => this.commonService.showErrorMsg(err),
         () => console.log('Get all message -complete')
         );
   }
-
+  getData() {
+    
+  }
+  addMessages(data) {
+    this.msges = this.msges.concat(data);
+  }
   doStart(refresher) {
     console.log('Doing Start', refresher);
   }

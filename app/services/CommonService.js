@@ -100,7 +100,7 @@ export class CommonService {
 		this.getAllMessage = function() {
 			this.student = SingletonService.getInstance().getStudent();
         	if(this.student.student_id){
-        		var url = this.serverlocation +'student/messages?student_id='+this.student.student_id;
+        		var url = this.serverlocation +'student/messages?student_id='+this.student.student_id+'/'+ SingletonService.getInstance().getMessageOffset();
         	}
 		    return this.http.get(url).map(res => res.json());
 		}
@@ -125,6 +125,12 @@ export class CommonService {
 		    });
 		    this.nav.present(alert);
 		}
-    }   
+    }  
+
+    aLocalStorage = {
+    	getAllMessages : function() {
+
+    	}
+    } 
  
 }

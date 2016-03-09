@@ -18,7 +18,7 @@ export class Login {
   	this.studentSignup	= Signup;
   	this.studenname = "";
   	this.password = "";
-    this.people = [];
+    this.user = [];
     this.platform.ready().then(() => {
             this.storage = new Storage(SqlStorage);
             this.refresh();
@@ -42,7 +42,7 @@ export class Login {
        var userData =  JSON.parse(data._body);
   		if(userData.student_id){
 
-        SingletonService.getInstance().setStudent(userData);
+       SingletonService.getInstance().setStudent(userData);
        this.addUser(userData.student_id, userData.user_id);
   			this.nav.push(TabsPage, { name : 'login' });
   		}else{
@@ -58,8 +58,8 @@ export class Login {
       this.studentId = studentId;
       this.userId = userId;
         this.platform.ready().then(() => {
-            this.storage.query("INSERT INTO people (firstname, lastname) VALUES ('Nic', 'Raboy')").then((data) => {
-                console.log(JSON.stringify(data.res));
+            this.storage.query("INSERT INTO user (userId, studentId) VALUES ('"+this.userId+"', '"+this.studentId+"')").then((data) => {             
+                console.log(JSON.stringify(data.res));                
             }, (error) => {
                 console.log("ERROR -> " + JSON.stringify(error.err));
             });
@@ -67,12 +67,11 @@ export class Login {
     }
    refresh() {
         this.platform.ready().then(() => {
-          console.log("00000000000000000000000000");
-            this.storage.query("SELECT * FROM people").then((data) => {
-                this.people = [];
+            this.storage.query("SELECT * FROM user").then((data) => {
+                this.user = [];
                 if(data.res.rows.length > 0) {
                     for(var i = 0; i < data.res.rows.length; i++) {
-                        this.people.push({firstname: data.res.rows.item(i).firstname, lastname: data.res.rows.item(i).lastname});
+                        this.user.push({firstname: data.res.rows.item(i).firstname, lastname: data.res.rows.item(i).lastname});
                     }
                 }
             }, (error) => {

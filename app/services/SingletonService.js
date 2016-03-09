@@ -3,6 +3,7 @@ export class SingletonService
     student:Object;
     static instance:SingletonService;
     static isCreating:Boolean = false;
+    msgOffset: 0;
  
     constructor() {
         if (!SingletonService.isCreating) {
@@ -29,5 +30,10 @@ export class SingletonService
     getStudent() {
         return this.student;
     }
+    getMessageOffset() {
+        this.msgOffset = this.msgOffset + 10;
+        return this.msgOffset;
+    }
+
 }
  
