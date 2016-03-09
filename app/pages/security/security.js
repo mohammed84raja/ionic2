@@ -20,7 +20,6 @@ export class Security {
    	);
   }
   passwordChangeSuccessfully(data) {
-  	debugger;
   	var msg = "";
   	var response = null;
   	if(data._body){
