@@ -1,0 +1,28 @@
+<ion-navbar *navbar c_theme>
+  <ion-title>More</ion-title>
+</ion-navbar>
+
+<ion-content class="more">
+	<ion-list>
+		<a ion-item [navPush]="subject">
+			Subjects
+		</a>
+		<a ion-item [navPush]="events">
+			Events
+		</a>
+		
+		<a ion-item [navPush]="transport">
+			Transport
+		</a>
+		
+		<a ion-item [navPush]="hostel">
+			Hostels
+		</a>
+		
+		<a ion-item [navPush]="map">
+			Map
+		</a>
+		
+	</ion-list>
+	
+</ion-content>

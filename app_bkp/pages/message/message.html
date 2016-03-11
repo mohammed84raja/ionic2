@@ -1,0 +1,29 @@
+<ion-navbar *navbar c_theme>
+  <ion-title>Messages</ion-title>
+</ion-navbar>
+
+<ion-content padding class="message">
+	 <ion-refresher 
+		pulling-text="Pull To Refresh"
+		refreshing-text="Fetching ..." 
+		refreshing-icon="ion-loading-b"
+		(start)="doStart($event)"
+		(refresh)="doRefresh($event)"
+		(pulling)="doPulling($event)">
+  	</ion-refresher>
+  <!-- 	<button (click)="showToast()">Open modal</button> -->
+	<ion-card *ngFor="#msg of msges">
+		<!-- <ion-item>
+			<img src="http://cdn-maf0.heartyhosting.com/sites/muscleandfitness.com/files/styles/homepage_top_small_332x185/public/media/college-muscle-fit-man-campus_0.jpg?itok=dGnMd94O" (click)="openImageModal('http://cdn-maf0.heartyhosting.com/sites/muscleandfitness.com/files/styles/homepage_top_small_332x185/public/media/college-muscle-fit-man-campus_0.jpg?itok=dGnMd94O')" width="100" height="100" class="image-list-thumb" id="myCanvas"/>
+		</ion-item> -->
+		<ion-card-content>
+			<p>
+				{{trimMessage(msg.message)}}
+			</p>
+		</ion-card-content>
+		<ion-item>
+			<ion-note item-right>{{noOfdaysfromToday(msg.creation_date)}} days ago</ion-note>
+		</ion-item>
+	</ion-card>
+	
+</ion-content>

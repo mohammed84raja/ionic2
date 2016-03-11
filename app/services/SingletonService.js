@@ -3,7 +3,10 @@ export class SingletonService
     student:Object;
     static instance:SingletonService;
     static isCreating:Boolean = false;
+    access_token: String;
     msgOffset: 0;
+    pageSize: 0;
+    examId : null;
  
     constructor() {
         if (!SingletonService.isCreating) {
@@ -25,14 +28,31 @@ export class SingletonService
         this.student = student;
     }
     setExamType(examId:String) {
-        this.student.exam_id = examId;
+        this.examId = examId;
+    }
+    getExamType(examId:String) {
+        return this.examId;
     }
     getStudent() {
         return this.student;
     }
-    getMessageOffset() {
-        this.msgOffset = this.msgOffset + 10;
+    setOffset(offset) {
+        return this.msgOffset = offset;
+    }
+    getOffset() {
         return this.msgOffset;
+    }
+    setAuthorization(auth) {
+        this.access_token = auth;
+    }
+    getAuthorization() {
+        return this.access_token;
+    }
+    setPageSize(size) {
+        this.pageSize = size;
+    }
+    getPageSize() {
+        return this.pageSize;
     }
 
 }

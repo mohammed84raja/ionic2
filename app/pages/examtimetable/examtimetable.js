@@ -2,6 +2,7 @@ import {NavController, NavParams} from 'ionic-framework';
 import {Page, Pipe, PipeTransform} from 'ionic-framework';
 import {forwardRef} from 'angular2/core';
 import { CommonService } from '../../services/CommonService';
+import { SingletonService } from '../../services/SingletonService';
 
 @Page({
   templateUrl: 'build/pages/examtimetable/examtimetable-details.html',
@@ -21,7 +22,14 @@ class NavigationDetailsPage {
 		this.selection = { title: params.data.exam_name };
   }
   changeDateFormate(date){
-  	return new Date(date);
+  	var d = new Date(date);
+    var dformat = [d.getMonth()+1,
+               d.getDate(),
+               d.getFullYear()].join('/')+' '+
+              [d.getHours(),
+               d.getMinutes(),
+               d.getSeconds()].join(':');
+  	return dformat;
   }
 }
 
@@ -44,7 +52,8 @@ export class Examtimetable {
 	}
 	
 	openNavDetailsPage(item) {
-		this.commonService.setExamType(item.exam_id);
+		SingletonService.getInstance().setExamType(item.exam_id);
+		debugger;
 		this.nav.push(NavigationDetailsPage, { exam_name: item.name });
 	}
    

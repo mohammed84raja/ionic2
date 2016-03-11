@@ -1,5 +1,6 @@
 import {App, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-framework';
 import { CommonService } from '../../services/CommonService';
+import { SingletonService } from '../../services/SingletonService';
 
 @Page({
 	templateUrl: 'build/pages/message/message.html',
@@ -10,10 +11,11 @@ export class Message {
   constructor(nav: NavController, commonService:CommonService, platform: Platform) {
 	this.nav = nav;
   this.platform = platform;
+  this.msges = [];
   this.commonService = commonService;
 	commonService.getAllMessage().subscribe(
-			data => {this.msges = data.message_list; console.log(data);},
-			err => commonService.showErrorMsg(err),
+			data => {this.addMessages(data); console.log(data);},
+			err => this.commonService.showErrorMsg(err),
 			() => console.log('Get all message -complete')
      	);
   }
@@ -29,7 +31,7 @@ export class Message {
   
  doRefresh(refresher) { 
     this.commonService.getAllMessage().subscribe(
-        data => {this.addMessages(data.message_list); refresher.complete();},
+        data => {this.addMessages(data); refresher.complete();},
         err => this.commonService.showErrorMsg(err),
         () => console.log('Get all message -complete')
         );
@@ -38,7 +40,12 @@ export class Message {
     
   }
   addMessages(data) {
-    this.msges = this.msges.concat(data);
+    var messages =  data.message_list;
+    var pageSize = data.num_rows;
+    var offset = data.offset;
+    this.msges = this.msges.concat(messages);
+    SingletonService.getInstance().setPageSize(pageSize);
+    SingletonService.getInstance().setOffset(offset);
   }
   doStart(refresher) {
     console.log('Doing Start', refresher);

@@ -1,0 +1,17 @@
+
+<ion-navbar *navbar c_theme>
+  <ion-title>
+    Timetable
+  </ion-title>
+</ion-navbar>
+
+<ion-content class="timetable">
+	<ion-list>
+		<a ion-item [navPush]="classtimetable">
+			Class Timetable
+		</a>
+		<a ion-item [navPush]="examtimetable">
+			Exam Timetable
+		</a>
+	</ion-list>
+</ion-content>

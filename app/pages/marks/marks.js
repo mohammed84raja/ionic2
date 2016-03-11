@@ -2,6 +2,7 @@ import {NavController, NavParams} from 'ionic-framework';
 import {Page} from 'ionic-framework';
 import {forwardRef} from 'angular2/core';
 import { CommonService } from '../../services/CommonService';
+import { SingletonService } from '../../services/SingletonService';
 
 @Page({
   templateUrl: 'build/pages/marks/marks-details.html',
@@ -48,8 +49,8 @@ export class Marks {
 		]*/
   }
   
-  openNavDetailsPage(item) {
-  		this.commonService.setExamType(item.exam_id);
+  openNavDetailsPage(item) {  		
+		SingletonService.getInstance().setExamType(item.exam_id);
 		this.nav.push(MarkDetailsPage, { name: item.name });
   }
   

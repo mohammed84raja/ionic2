@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>V2 Test</name>
+    <name>agarum</name>
     <description>An Ionic Framework and Cordova project.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -15,6 +15,12 @@
 
     <platform name="android">
         <allow-intent href="market:*" />
+		<icon src="resources/android/icon/96.png" density="ldpi"/>
+        <icon src="resources/android/icon/96.png" density="mdpi"/>
+        <icon src="resources/android/icon/96.png" density="hdpi"/>
+        <icon src="resources/android/icon/96.png" density="xhdpi"/>
+        <icon src="resources/android/icon/96.png" density="xxhdpi"/>
+        <icon src="resources/android/icon/96.png" density="xxxhdpi"/>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -23,7 +29,7 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-minSdkVersion" value="14" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <feature name="StatusBar">

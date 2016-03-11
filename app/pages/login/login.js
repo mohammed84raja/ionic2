@@ -40,14 +40,14 @@ export class Login {
   processLogin(data) {
   	if(data.status == 200 || data.status == 'success') {
        var userData =  JSON.parse(data._body);
-  		if(userData.student_id){
-
-       SingletonService.getInstance().setStudent(userData);
-       this.addUser(userData.student_id, userData.user_id);
-  			this.nav.push(TabsPage, { name : 'login' });
-  		}else{
-        this.commonService.showErrorMsg(data);
-      }
+       if(userData.access_token){
+          SingletonService.getInstance().setAuthorization(userData.access_token);
+          this.nav.push(TabsPage, { name : 'login' });
+       }else {
+          this.commonService.showErrorMsg(data);
+       }
+       
+      // this.addUser(userData.student_id, userData.user_id);  	
   		
   	} else {
   		this.commonService.showErrorMsg(data);

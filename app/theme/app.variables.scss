@@ -45,6 +45,7 @@ $font-family-md-base:		 	omnesmedium;
 $button-md-font-size:			1.8rem;
 $button-ios-font-size:			1.8rem;
 $font-family-medium:           	omnesmedium;
+$font-family-semi:           	omnessemi;
 
 @font-face {
   font-family: 'omnesreg';
@@ -68,3 +69,13 @@ $font-family-medium:           	omnesmedium;
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'omnessemi';
+  src: url('../fonts/omnessem-webfont.eot') format('embedded-opentype');
+  src: url('../fonts/omnessem-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/omnessem-webfont.woff')  format('woff'),
+       url('../fonts/omnessem-webfont.ttf')  format('truetype'),
+       url('../fonts/omnessem-webfont.svg#SaysetthaWeb') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

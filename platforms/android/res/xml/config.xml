@@ -40,7 +40,13 @@
         <param name="android-package" value="io.sqlc.SQLitePlugin" />
     </feature>
     <allow-intent href="market:*" />
-    <name>V2 Test</name>
+    <icon density="ldpi" src="resources/android/icon/96.png" />
+    <icon density="mdpi" src="resources/android/icon/96.png" />
+    <icon density="hdpi" src="resources/android/icon/96.png" />
+    <icon density="xhdpi" src="resources/android/icon/96.png" />
+    <icon density="xxhdpi" src="resources/android/icon/96.png" />
+    <icon density="xxxhdpi" src="resources/android/icon/96.png" />
+    <name>agarum</name>
     <description>An Ionic Framework and Cordova project.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -55,7 +61,7 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-minSdkVersion" value="14" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 </widget>

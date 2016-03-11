@@ -1,0 +1,15 @@
+.settings{
+	.logout-style ion-label{
+		color:#CC0000 !important;
+	}
+	ion-item-divider{
+		font-size: 1.6rem;
+	}
+	ion-item{
+		border-bottom : 1px solid $list-border-color;
+	}
+	.item-inner{
+		border-bottom : none;
+	}
+}
+

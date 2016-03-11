@@ -63150,9 +63150,8 @@
 	    Login.prototype.processLogin = function (data) {
 	        if (data.status == 200 || data.status == 'success') {
 	            var userData = JSON.parse(data._body);
-	            if (userData.student_id) {
-	                SingletonService_1.SingletonService.getInstance().setStudent(userData);
-	                this.addUser(userData.student_id, userData.user_id);
+	            if (userData.access_token) {
+	                SingletonService_1.SingletonService.getInstance().setAuthorization(userData.access_token);
 	                this.nav.push(tabs_1.TabsPage, { name: 'login' });
 	            }
 	            else {
@@ -63258,13 +63257,15 @@
 	};
 	var ionic_framework_1 = __webpack_require__(5);
 	var CommonService_1 = __webpack_require__(364);
+	var SingletonService_1 = __webpack_require__(369);
 	var Message = (function () {
 	    function Message(nav, commonService, platform) {
 	        var _this = this;
 	        this.nav = nav;
 	        this.platform = platform;
+	        this.msges = [];
 	        this.commonService = commonService;
-	        commonService.getAllMessage().subscribe(function (data) { _this.msges = data.message_list; console.log(data); }, function (err) { return commonService.showErrorMsg(err); }, function () { return console.log('Get all message -complete'); });
+	        commonService.getAllMessage().subscribe(function (data) { _this.addMessages(data); console.log(data); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Get all message -complete'); });
 	    }
 	    /*showToast() {
 	      this.platform.ready().then(() => {
@@ -63277,12 +63278,17 @@
 	    }*/
 	    Message.prototype.doRefresh = function (refresher) {
 	        var _this = this;
-	        this.commonService.getAllMessage().subscribe(function (data) { _this.addMessages(data.message_list); refresher.complete(); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Get all message -complete'); });
+	        this.commonService.getAllMessage().subscribe(function (data) { _this.addMessages(data); refresher.complete(); }, function (err) { return _this.commonService.showErrorMsg(err); }, function () { return console.log('Get all message -complete'); });
 	    };
 	    Message.prototype.getData = function () {
 	    };
 	    Message.prototype.addMessages = function (data) {
-	        this.msges = this.msges.concat(data);
+	        var messages = data.message_list;
+	        var pageSize = data.num_rows;
+	        var offset = data.offset;
+	        this.msges = this.msges.concat(messages);
+	        SingletonService_1.SingletonService.getInstance().setPageSize(pageSize);
+	        SingletonService_1.SingletonService.getInstance().setOffset(offset);
 	    };
 	    Message.prototype.doStart = function (refresher) {
 	        console.log('Doing Start', refresher);
@@ -63373,19 +63379,20 @@
 	            }
 	        };
 	        this.nav = nav;
-	        this.serverlocation = "http://www.agarum.com/api/v1/";
+	        this.serverlocation = "http://www.agarum.com/api/v2/";
 	        this.http = http;
 	        this.student = {};
+	        this.headers = new http_1.Headers();
+	        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+	        this.headers.append('Authorization', SingletonService_1.SingletonService.getInstance().getAuthorization());
 	        this.studentLogin = function (param) {
 	            var uiparams = Object.keys(param).map(function (k) {
 	                return encodeURIComponent(k) + '=' + encodeURIComponent(param[k]);
 	            }).join('&');
 	            var url = this.serverlocation + 'user/login';
-	            var headers = new http_1.Headers();
-	            headers.append('Content-Type', 'application/x-www-form-urlencoded');
 	            //"username=9986559929&password=abc123"
 	            return this.http.post(url, uiparams, {
-	                headers: headers
+	                headers: this.headers
 	            });
 	        };
 	        this.changePassword = function (param) {
@@ -63395,10 +63402,8 @@
 	                return encodeURIComponent(k) + '=' + encodeURIComponent(param[k]);
 	            }).join('&');
 	            var url = this.serverlocation + 'user/security';
-	            var headers = new http_1.Headers();
-	            headers.append('Content-Type', 'application/x-www-form-urlencoded');
 	            return this.http.put(url, uiparams, {
-	                headers: headers
+	                headers: this.headers
 	            });
 	        };
 	        this.updateUserProfile = function (param) {
@@ -63406,67 +63411,53 @@
 	                return encodeURIComponent(k) + '=' + encodeURIComponent(param[k]);
 	            }).join('&');
 	            var url = this.serverlocation + 'user/profile';
-	            var headers = new http_1.Headers();
-	            headers.append('Content-Type', 'application/x-www-form-urlencoded');
 	            return this.http.put(url, uiparams, {
-	                headers: headers
+	                headers: this.headers
 	            });
 	        };
 	        this.getUserDetails = function () {
-	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
-	            if (this.student.user_id) {
-	                var url = this.serverlocation + 'user/profile?user_id=' + this.student.user_id;
-	            }
-	            return this.http.get(url).map(function (res) { return res.json(); });
+	            var url = this.serverlocation + 'user/profile';
+	            return this.http.get(url, {
+	                headers: this.headers
+	            }).map(function (res) { return res.json(); });
 	        };
 	        this.getAllTimetable = function () {
-	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
-	            if (this.student.student_id) {
-	                var url = this.serverlocation + 'student/timetable?student_id=' + this.student.student_id;
-	            }
-	            return this.http.get(url).map(function (res) { return res.json(); });
+	            var url = this.serverlocation + 'student/timetable';
+	            return this.http.get(url, {
+	                headers: this.headers
+	            }).map(function (res) { return res.json(); });
 	        };
 	        this.getExamDetails = function () {
-	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
-	            if (this.student.student_id) {
-	                var url = this.serverlocation + 'student/exam-schedule?exam_id=' + this.student.exam_id + '&student_id=' + this.student.student_id;
-	            }
-	            return this.http.get(url).map(function (res) { return res.json(); });
-	        };
-	        this.setExamType = function (exam_id) {
-	            SingletonService_1.SingletonService.getInstance().setExamType(exam_id);
+	            var url = this.serverlocation + 'student/exam-schedule?exam_id=' + SingletonService_1.SingletonService.getInstance().getExamType();
+	            return this.http.get(url, {
+	                headers: this.headers
+	            }).map(function (res) { return res.json(); });
 	        };
 	        this.getExamList = function () {
-	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
-	            if (this.student.student_id) {
-	                var url = this.serverlocation + 'student/exams?student_id=' + this.student.student_id;
-	            }
-	            return this.http.get(url).map(function (res) { return res.json(); });
+	            var url = this.serverlocation + 'student/exams';
+	            return this.http.get(url, {
+	                headers: this.headers
+	            }).map(function (res) { return res.json(); });
 	        };
 	        this.getMarks = function () {
-	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
-	            if (this.student.student_id) {
-	                var url = this.serverlocation + 'student/marks?exam_id=' + this.student.exam_id + '&student_id=' + this.student.student_id;
-	            }
-	            return this.http.get(url).map(function (res) { return res.json(); });
+	            var url = this.serverlocation + 'student/marks?exam_id=' + SingletonService_1.SingletonService.getInstance().getExamType();
+	            return this.http.get(url, {
+	                headers: this.headers
+	            }).map(function (res) { return res.json(); });
 	        };
 	        this.getAllMessage = function () {
-	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
-	            if (this.student.student_id) {
-	                var url = this.serverlocation + 'student/messages?student_id=' + this.student.student_id + '/' + SingletonService_1.SingletonService.getInstance().getMessageOffset();
-	            }
-	            return this.http.get(url).map(function (res) { return res.json(); });
+	            var url = this.serverlocation + 'student/messages?offset=' + SingletonService_1.SingletonService.getInstance().getOffset();
+	            return this.http.get(url, {
+	                headers: this.headers
+	            }).map(function (res) { return res.json(); });
 	        };
 	        this.getAllSubjects = function () {
-	            this.student = SingletonService_1.SingletonService.getInstance().getStudent();
-	            if (this.student.student_id) {
-	                var url = this.serverlocation + 'student/subjects?student_id=' + this.student.student_id;
-	            }
-	            return this.http.get(url).map(function (res) { return res.json(); });
+	            var url = this.serverlocation + 'student/subjects';
+	            return this.http.get(url, {
+	                headers: this.headers
+	            }).map(function (res) { return res.json(); });
 	        };
 	        this.showErrorMsg = function (msg, msgTitle) {
-	            console.log("ShowErrorMsg function");
-	            console.log(msg);
 	            if (msg._body) {
 	                msg = JSON.parse(msg._body);
 	                msg = msg.message;
@@ -63592,6 +63583,8 @@
 	var SingletonService = (function () {
 	    function SingletonService() {
 	        this.msgOffset = 0;
+	        this.pageSize = 0;
+	        this.examId = null;
 	        if (!SingletonService.isCreating) {
 	            throw new Error("You can't call new in Singleton instances!");
 	        }
@@ -63608,14 +63601,31 @@
 	        this.student = student;
 	    };
 	    SingletonService.prototype.setExamType = function (examId) {
-	        this.student.exam_id = examId;
+	        this.examId = examId;
+	    };
+	    SingletonService.prototype.getExamType = function (examId) {
+	        return this.examId;
 	    };
 	    SingletonService.prototype.getStudent = function () {
 	        return this.student;
 	    };
-	    SingletonService.prototype.getMessageOffset = function () {
-	        this.msgOffset = this.msgOffset + 10;
+	    SingletonService.prototype.setOffset = function (offset) {
+	        return this.msgOffset = offset;
+	    };
+	    SingletonService.prototype.getOffset = function () {
 	        return this.msgOffset;
+	    };
+	    SingletonService.prototype.setAuthorization = function (auth) {
+	        this.access_token = auth;
+	    };
+	    SingletonService.prototype.getAuthorization = function () {
+	        return this.access_token;
+	    };
+	    SingletonService.prototype.setPageSize = function (size) {
+	        this.pageSize = size;
+	    };
+	    SingletonService.prototype.getPageSize = function () {
+	        return this.pageSize;
 	    };
 	    SingletonService.isCreating = false;
 	    return SingletonService;
@@ -63948,6 +63958,7 @@
 	var ionic_framework_1 = __webpack_require__(5);
 	var ionic_framework_2 = __webpack_require__(5);
 	var CommonService_1 = __webpack_require__(364);
+	var SingletonService_1 = __webpack_require__(369);
 	var NavigationDetailsPage = (function () {
 	    function NavigationDetailsPage(commonService, nav, params) {
 	        var _this = this;
@@ -63957,7 +63968,14 @@
 	        this.selection = { title: params.data.exam_name };
 	    }
 	    NavigationDetailsPage.prototype.changeDateFormate = function (date) {
-	        return new Date(date);
+	        var d = new Date(date);
+	        var dformat = [d.getMonth() + 1,
+	            d.getDate(),
+	            d.getFullYear()].join('/') + ' ' +
+	            [d.getHours(),
+	                d.getMinutes(),
+	                d.getSeconds()].join(':');
+	        return dformat;
 	    };
 	    NavigationDetailsPage = __decorate([
 	        ionic_framework_2.Page({
@@ -63979,7 +63997,8 @@
 	        commonService.getExamList().subscribe(function (data) { _this.items = data.exam_list; }, function (err) { return commonService.showErrorMsg(err); }, function () { return console.log('Get all exam detail --complete'); });
 	    }
 	    Examtimetable.prototype.openNavDetailsPage = function (item) {
-	        this.commonService.setExamType(item.exam_id);
+	        SingletonService_1.SingletonService.getInstance().setExamType(item.exam_id);
+	        debugger;
 	        this.nav.push(NavigationDetailsPage, { exam_name: item.name });
 	    };
 	    Examtimetable = __decorate([
@@ -64011,6 +64030,7 @@
 	var ionic_framework_1 = __webpack_require__(5);
 	var ionic_framework_2 = __webpack_require__(5);
 	var CommonService_1 = __webpack_require__(364);
+	var SingletonService_1 = __webpack_require__(369);
 	var MarkDetailsPage = (function () {
 	    function MarkDetailsPage(commonService, nav, params) {
 	        var _this = this;
@@ -64048,7 +64068,7 @@
 	        ]*/
 	    }
 	    Marks.prototype.openNavDetailsPage = function (item) {
-	        this.commonService.setExamType(item.exam_id);
+	        SingletonService_1.SingletonService.getInstance().setExamType(item.exam_id);
 	        this.nav.push(MarkDetailsPage, { name: item.name });
 	    };
 	    Marks = __decorate([

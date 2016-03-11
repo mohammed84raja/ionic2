@@ -1,0 +1,15 @@
+
+<ion-navbar *navbar class="android-attr" c_theme>
+  <ion-title>
+    Exam Timetable
+  </ion-title>
+</ion-navbar>
+
+<ion-content class="examtimetable">
+	<ion-list>
+		<a ion-item *ngFor="#item of items" (click)="openNavDetailsPage(item)">
+		  {{ item.name }}
+		</a>
+	</ion-list>
+	
+</ion-content>

@@ -4,20 +4,19 @@
 
 <ion-content class="settings">
 	<ion-list>
-		<ion-item class="avatar_style">
+		<ion-item class="avatar_style profile_name">
 			<ion-avatar item-left>
 			  <img src="img/marty-avatar.png">
 			</ion-avatar>
-			<h2>Bhuvana</h2>
+			<h2 id="profile_title">Bhuvana</h2>
 		</ion-item>
-    </ion-list>
-	<ion-list>
+
 		<ion-item [navPush]="profile">
 			<ion-icon name="contact" item-left large></ion-icon>
 			<h2>Profile</h2>
 		</ion-item>
 		<ion-item [navPush]="security">
-			<ion-icon name="key" item-left large></ion-icon>
+			<ion-icon name="lock" item-left large></ion-icon>
 			<h2>Security</h2>
 		</ion-item>
     </ion-list>

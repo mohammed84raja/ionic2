@@ -10,21 +10,21 @@ export class CommonService {
     constructor(@Inject(Http) http: Http, nav: NavController) {
     	
     	this.nav = nav;
-        this.serverlocation = /*"http://localhost:8100/api" ;//*/ "http://www.agarum.com/api/v1/";
+        this.serverlocation = /*"http://localhost:8100/api" ;//*/ "http://www.agarum.com/api/v2/";
         this.http = http;
         this.student = {};
+        this.headers = new Headers();
+        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        this.headers.append('Authorization',  SingletonService.getInstance().getAuthorization());
 	    this.studentLogin = function(param) {	  
 	      var uiparams = Object.keys(param).map(function(k) {
 			    return encodeURIComponent(k) + '=' + encodeURIComponent(param[k])
 			}).join('&');
-		    var url = this.serverlocation +'user/login';
-
-			var headers = new Headers();
-			headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		    var url = this.serverlocation +'user/login';			
 			
 //"username=9986559929&password=abc123"
 			return this.http.post(url, uiparams , {
-				headers: headers
+				headers: this.headers
 			});
 	    }
 	    this.changePassword = function(param) {
@@ -34,86 +34,67 @@ export class CommonService {
 	        var uiparams = Object.keys(param).map(function(k) {
 			    return encodeURIComponent(k) + '=' + encodeURIComponent(param[k])
 			}).join('&');
+
 		    var url = this.serverlocation +'user/security';
-
-			var headers = new Headers();
-			headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
 			return this.http.put(url, uiparams, {
-				headers: headers
+				headers: this.headers
 			});
 	    }
 	    this.updateUserProfile = function(param) {  
 	        var uiparams = Object.keys(param).map(function(k) {
 			    return encodeURIComponent(k) + '=' + encodeURIComponent(param[k])
 			}).join('&');
-		    var url = this.serverlocation +'user/profile';
-
-			var headers = new Headers();
-			headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
+		    var url = this.serverlocation +'user/profile';			
 			return this.http.put(url, uiparams, {
-				headers: headers
+				headers: this.headers
 			});
 
 	    }
-	    this.getUserDetails = function() {		    	
-
-        	this.student = SingletonService.getInstance().getStudent();
-        	if(this.student.user_id){
-        		var url = this.serverlocation +'user/profile?user_id='+this.student.user_id;
-        	}
-		    
-		    return this.http.get(url).map(res => res.json());
+	    this.getUserDetails = function() {	
+        	var url = this.serverlocation +'user/profile';
+		    return this.http.get(url,  {
+				headers: this.headers
+			}).map(res => res.json());
 	    }
 	    this.getAllTimetable = function() {
-			this.student = SingletonService.getInstance().getStudent();
-        	if(this.student.student_id){
-        		var url = this.serverlocation +'student/timetable?student_id='+this.student.student_id;
-        	}
-		    return this.http.get(url).map(res => res.json());
+        	var url = this.serverlocation +'student/timetable';
+		    return this.http.get(url, {
+				headers: this.headers
+			}).map(res => res.json());
 		}
 		this.getExamDetails = function() {
-			this.student = SingletonService.getInstance().getStudent();
-        	if(this.student.student_id){
-        		var url = this.serverlocation +'student/exam-schedule?exam_id=' + this.student.exam_id +'&student_id='+this.student.student_id;
-        	}
-			return this.http.get(url).map(res => res.json());
-		}
-		this.setExamType = function(exam_id) {
-			SingletonService.getInstance().setExamType(exam_id);
+        	var url = this.serverlocation +'student/exam-schedule?exam_id=' + SingletonService.getInstance().getExamType();
+			return this.http.get(url,  {
+				headers: this.headers
+			}).map(res => res.json());
 		}
 		this.getExamList = function() {
-			this.student = SingletonService.getInstance().getStudent();
-        	if(this.student.student_id){
-        		var url = this.serverlocation +'student/exams?student_id='+this.student.student_id;
-        	}
-		    return this.http.get(url).map(res => res.json());
+        	var url = this.serverlocation +'student/exams';
+		    return this.http.get(url, {
+				headers: this.headers
+			}).map(res => res.json());
 		}
 		this.getMarks = function() {
-			this.student = SingletonService.getInstance().getStudent();
-        	if(this.student.student_id){
-        		var url = this.serverlocation +'student/marks?exam_id=' + this.student.exam_id +'&student_id='+this.student.student_id;
-        	}
-			return this.http.get(url).map(res => res.json());
+        	var url = this.serverlocation +'student/marks?exam_id=' + SingletonService.getInstance().getExamType();
+			return this.http.get(url,  {
+				headers: this.headers
+			}).map(res => res.json());
 		}
 		this.getAllMessage = function() {
-			this.student = SingletonService.getInstance().getStudent();
-        	if(this.student.student_id){
-        		var url = this.serverlocation +'student/messages?student_id='+this.student.student_id+'/'+ SingletonService.getInstance().getMessageOffset();
-        	}
-		    return this.http.get(url).map(res => res.json());
+
+			var url = this.serverlocation +'student/messages?offset='+ SingletonService.getInstance().getOffset();			
+			return this.http.get( url, {
+		       	headers: this.headers
+		     }).map(res => res.json());
+		
 		}
 		this.getAllSubjects = function() {
-			this.student = SingletonService.getInstance().getStudent();
-        	if(this.student.student_id){
-        		var url = this.serverlocation +'student/subjects?student_id='+this.student.student_id;
-        	}
-		    return this.http.get(url).map(res => res.json());
+        	var url = this.serverlocation +'student/subjects';
+		    return this.http.get(url, {
+		        headers: this.headers
+		    }).map(res => res.json());
 		}
 		this.showErrorMsg = function(msg, msgTitle) {
-			console.log("ShowErrorMsg function");
-			console.log(msg);
 			if(msg._body){
 				msg = JSON.parse(msg._body);
 				msg = msg.message;
